@@ -10982,24 +10982,73 @@ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"
 $(document).ready(function () {
   var source = $("#dischi-template").html();
   var template = Handlebars.compile(source);
-  $.ajax({
-    url: 'dischi.php',
-    method: 'GET',
-    success: function success(data) {
-      for (var i = 0; i < data.length; i++) {
-        var context = {
-          'poster': data[i].poster,
-          'title': data[i].title,
-          'author': data[i].author,
-          'year': data[i].year
-        };
-        var html = template(context);
-        $('.card-container').append(html);
+
+  if ($("#ajax-version").length) {
+    $.ajax({
+      url: '../dischi.php',
+      method: 'GET',
+      success: function success(data) {
+        // creo array per i generi
+        var genres = [];
+
+        for (var i = 0; i < data.length; i++) {
+          var context = {
+            'poster': data[i].poster,
+            'title': data[i].title,
+            'author': data[i].author,
+            'year': data[i].year
+          };
+          var html = template(context);
+          $('.card-container').append(html); // recupero genere disco corrente
+
+          var currentGenre = data[i].genre; // verifico che non sia gia nell'arrai generi
+
+          if (!genres.includes(currentGenre)) {
+            genres.push(currentGenre);
+          }
+        } // console.log(genres);
+        // stampo le option
+
+
+        for (var i = 0; i < genres.length; i++) {
+          $('#filter').append("\n                        <option value=\"".concat(genres[i], "\">").concat(genres[i], "<option>"));
+        }
+      },
+      error: function error() {
+        console.log('errore');
       }
-    },
-    error: function error() {
-      console.log('errore');
-    }
+    });
+  } // filtro genere
+
+
+  $('#filter').change(function () {
+    // svuoto il contenitore
+    $('.card-container').empty(); // recupero value genere selezionato
+
+    var selectedGenre = $('#filter').val(); // invio al server il genere selezionato
+
+    $.ajax({
+      url: '../dischi.php',
+      method: 'GET',
+      data: {
+        genre: selectedGenre
+      },
+      success: function success(data) {
+        for (var i = 0; i < data.length; i++) {
+          var context = {
+            'poster': data[i].poster,
+            'title': data[i].title,
+            'author': data[i].author,
+            'year': data[i].year
+          };
+          var html = template(context);
+          $('.card-container').append(html);
+        }
+      },
+      error: function error() {
+        console.log('errore');
+      }
+    });
   });
 });
 

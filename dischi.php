@@ -72,6 +72,41 @@ $dischi = [
     ]
 ];
 
-header('Content-Type: application/json');
-echo json_encode($dischi);
+// preparo array pe ri mcrypt_generic
+$genres = [];
+foreach ($dischi as $disco) {
+    // recupero genere disco corrente
+    $genre = $disco['genre'];
+    // verifico se è gia nell'array sennò lo pusho
+    if(!in_array($genre, $genres)) {
+        $genres[] = $genre;
+    }
+}
+
+// verifico se esiste un parametro GET
+if(!empty($_GET) && !empty($_GET['genre'])) {
+
+    // recupero parametro GET genre
+    $genre = $_GET['genre'];
+
+    // creo array per dischi filtrati
+    $dischiFiltrati = [];
+
+    // filtro i dischi per genere in base a quello che seleziono
+    foreach ($dischi as $disco) {
+        // verifico se il genere è quello selezionato
+        if($disco['genre'] == $genre) {
+            // se si lo salvo nell'array altrimenti lo scarto
+            $dischiFiltrati[] = $disco;
+        };
+    };
+} else {
+    // restituisco tutti i generi
+    $dischiFiltrati = $dischi;
+}
+
+if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+    header('Content-Type: application/json');
+    echo json_encode($dischiFiltrati);
+}
 ?>
