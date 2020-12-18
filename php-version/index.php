@@ -18,10 +18,11 @@
         <main>
             <div class="container">
                 <div class="filter">
+
                     <select id="filter" name="">
-                        <option value="">Generi</option>
+                        <option value="">Tutti i generi</option>
                         <?php foreach ($genres as $genre) { ?>
-                            <option value="<?php echo $genre  ?>"><?php echo $genre ?><option>
+                            <option value="<?php echo $genre  ?>"><?php echo $genre ?></option>
                             <?php
                         }?>
                     </select>

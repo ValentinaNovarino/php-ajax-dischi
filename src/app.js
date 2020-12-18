@@ -30,13 +30,10 @@ $(document).ready(function() {
                         genres.push(currentGenre);
                     }
                 }
-                // console.log(genres);
+                console.log(genres);
                 // stampo le option
                 for (var i = 0; i < genres.length; i++) {
-                    $('#filter').append(
-                        `
-                        <option value="${genres[i]}">${genres[i]}<option>`
-                    )
+                    $('#filter').append(`<option value="${genres[i]}">${genres[i]}</option>`)
                 }
             },
             error: function() {

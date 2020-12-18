@@ -11006,12 +11006,12 @@ $(document).ready(function () {
           if (!genres.includes(currentGenre)) {
             genres.push(currentGenre);
           }
-        } // console.log(genres);
-        // stampo le option
+        }
 
+        console.log(genres); // stampo le option
 
         for (var i = 0; i < genres.length; i++) {
-          $('#filter').append("\n                        <option value=\"".concat(genres[i], "\">").concat(genres[i], "<option>"));
+          $('#filter').append("<option value=\"".concat(genres[i], "\">").concat(genres[i], "</option>"));
         }
       },
       error: function error() {
