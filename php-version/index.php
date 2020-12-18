@@ -6,11 +6,13 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="../dist/app.css">
         <meta charset="utf-8">
-        <title></title>
+        <title>PHP version</title>
     </head>
     <body>
         <header class="flex">
+            <div class="container">
                 <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png" alt="">
+            </div>
         </header>
         <main>
             <div class="container">
